@@ -1,0 +1,70 @@
+/* 
+  UK PEPTIDE LABS - Standalone Stylesheet
+  Focus: Modern Typography, Layout Polish, and Interactive Transition Tweaks
+*/
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  background-color: #fafbfc;
+  color: #1e293b;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar styling for a high-end lab aesthetic */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Smooth fade & raise transitions for Back to Top Button */
+.back-to-top-visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+  pointer-events: auto !important;
+}
+
+.back-to-top-hidden {
+  opacity: 0 !important;
+  transform: translateY(16px) !important;
+  pointer-events: none !important;
+}
+
+/* Modal and panel utility transitions */
+.modal-transition {
+  transition: opacity 300s ease, transform 300s ease;
+}
+
+/* Prevent double horizontal scrolling during responsive grid reflows */
+.overflow-x-hidden {
+  overflow-x: hidden;
+}
+
+/* Line clamping helper */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;  
+  overflow: hidden;
+}

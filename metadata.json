@@ -1,0 +1,6 @@
+{
+  "name": "UK Peptide Labs",
+  "description": "Premium research-grade peptides, delivered across the UK. Modern, clean, and fully responsive marketing website with a professional, UK-compliant design.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
