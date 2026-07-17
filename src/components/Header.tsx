@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, ShoppingCart } from "lucide-react";
 import Logo from "./Logo";
 
 interface HeaderProps {
   activePage: string;
+  cartCount: number;
+  onCartOpenClick: () => void;
 }
 
-export default function Header({ activePage }: HeaderProps) {
+export default function Header({ activePage, cartCount, onCartOpenClick }: HeaderProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -86,17 +88,48 @@ export default function Header({ activePage }: HeaderProps) {
             >
               Shop Peptides
             </a>
+            
+            {/* Research Cart Button */}
+            <button
+              onClick={onCartOpenClick}
+              className="relative ml-3 p-2.5 text-slate-700 hover:text-teal-700 hover:bg-slate-50 border border-slate-100 hover:border-teal-100 rounded-full transition-all duration-200 cursor-pointer flex items-center justify-center"
+              title="View Research Cart"
+            >
+              <ShoppingCart className="w-5 h-5" />
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-teal-600 text-white font-mono text-[9px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-sm">
+                  {cartCount}
+                </span>
+              )}
+            </button>
           </nav>
 
-          {/* Mobile Menu Button */}
-          <button
-            id="mobile-menu-toggle"
-            onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors focus:outline-none"
-            aria-label="Toggle menu"
-          >
-            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          {/* Right Side Accessories for Mobile */}
+          <div className="flex items-center gap-2 md:hidden">
+            {/* Mobile Research Cart Button */}
+            <button
+              onClick={onCartOpenClick}
+              className="relative p-2.5 text-slate-700 hover:text-teal-700 hover:bg-slate-50 border border-slate-100 hover:border-teal-100 rounded-full transition-all duration-200 cursor-pointer flex items-center justify-center"
+              title="View Research Cart"
+            >
+              <ShoppingCart className="w-5 h-5" />
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-teal-600 text-white font-mono text-[9px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white shadow-sm">
+                  {cartCount}
+                </span>
+              )}
+            </button>
+
+            {/* Mobile Menu Button */}
+            <button
+              id="mobile-menu-toggle"
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2 rounded-lg text-slate-700 hover:bg-slate-100 transition-colors focus:outline-none"
+              aria-label="Toggle menu"
+            >
+              {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
       </div>
 

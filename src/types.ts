@@ -10,9 +10,16 @@ export interface PeptideProduct {
   price: number; // in GBP
   casNumber?: string; // Chemical Abstracts Service number to show lab credibility
   researchFocus: string; // e.g., "Cellular repair pathways", "Metabolic research"
+  image: string; // URL of the product image
 }
 
 export interface FAQItem {
   question: string;
   answer: string;
 }
+
+export interface CartItem {
+  product: PeptideProduct;
+  quantity: number;
+}
+

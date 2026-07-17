@@ -12,7 +12,8 @@ export const PEPTIDES_DATA: PeptideProduct[] = [
     size: "10ml",
     price: 5.95,
     casNumber: "100-51-6 (Benzyl Alcohol)",
-    researchFocus: "Reconstitution and stabilization of analytical standards"
+    researchFocus: "Reconstitution and stabilization of analytical standards",
+    image: "https://www.uk-peptides.com/image/cache/catalog/products/bac%20water%2010ml-600x600.png"
   },
   {
     id: "acetic-acid-10ml",
@@ -25,7 +26,8 @@ export const PEPTIDES_DATA: PeptideProduct[] = [
     size: "10ml",
     price: 6.00,
     casNumber: "64-19-7",
-    researchFocus: "Hydrophobic peptide solubility optimization"
+    researchFocus: "Hydrophobic peptide solubility optimization",
+    image: "https://www.uk-peptides.com/image/cache/catalog/products/Acetic%20Acid-600x600.png"
   },
   {
     id: "bpc-157-5mg",
@@ -38,7 +40,8 @@ export const PEPTIDES_DATA: PeptideProduct[] = [
     size: "5mg",
     price: 16.95,
     casNumber: "137525-51-0",
-    researchFocus: "Tendon, ligament, and mucosal lining recovery pathways"
+    researchFocus: "Tendon, ligament, and mucosal lining recovery pathways",
+    image: "https://www.uk-peptides.com/image/cache/catalog/products/BPC-157-600x600.png"
   },
   {
     id: "tb-500-5mg",
@@ -51,7 +54,8 @@ export const PEPTIDES_DATA: PeptideProduct[] = [
     size: "5mg",
     price: 33.00,
     casNumber: "77591-33-4",
-    researchFocus: "Angiogenesis, muscle fiber recovery, and cell motility"
+    researchFocus: "Angiogenesis, muscle fiber recovery, and cell motility",
+    image: "https://www.uk-peptides.com/image/cache/catalog/products/TB500-5mg-600x600.png"
   },
   {
     id: "tb-500-2mg",
@@ -64,7 +68,8 @@ export const PEPTIDES_DATA: PeptideProduct[] = [
     size: "2mg",
     price: 16.95,
     casNumber: "77591-33-4",
-    researchFocus: "Cell migration kinetics and actin polymerization pathways"
+    researchFocus: "Cell migration kinetics and actin polymerization pathways",
+    image: "https://www.uk-peptides.com/image/cache/catalog/products/TB500-2mg-600x600.png"
   },
   {
     id: "cjc-1295-mod-grf-2mg",
@@ -77,7 +82,8 @@ export const PEPTIDES_DATA: PeptideProduct[] = [
     size: "2mg",
     price: 12.95,
     casNumber: "863288-34-0",
-    researchFocus: "Select GHRH receptor somatotropic signaling pathways"
+    researchFocus: "Select GHRH receptor somatotropic signaling pathways",
+    image: "https://www.uk-peptides.com/image/cache/catalog/products/CJC-MOD-GRF-600x600.png"
   },
   {
     id: "cjc-1295-mod-grf-5mg",
@@ -90,7 +96,8 @@ export const PEPTIDES_DATA: PeptideProduct[] = [
     size: "5mg",
     price: 25.95,
     casNumber: "863288-34-0",
-    researchFocus: "Extended somatotropic modeling and cell-line assays"
+    researchFocus: "Extended somatotropic modeling and cell-line assays",
+    image: "https://www.uk-peptides.com/image/cache/catalog/CJCMODGRF%205mg-small-600x600.jpg"
   },
   {
     id: "ipamorelin-2mg",
@@ -103,7 +110,8 @@ export const PEPTIDES_DATA: PeptideProduct[] = [
     size: "2mg",
     price: 9.95,
     casNumber: "170851-70-4",
-    researchFocus: "Receptor-selective somatotropic signaling and bone density modeling"
+    researchFocus: "Receptor-selective somatotropic signaling and bone density modeling",
+    image: "https://www.uk-peptides.com/image/cache/catalog/products/Ipamorelin-600x600.png"
   },
   {
     id: "ghrp-6-5mg",
@@ -116,7 +124,8 @@ export const PEPTIDES_DATA: PeptideProduct[] = [
     size: "5mg",
     price: 9.95,
     casNumber: "87616-84-0",
-    researchFocus: "GHS-R receptor binding and metabolic signaling cascades"
+    researchFocus: "GHS-R receptor binding and metabolic signaling cascades",
+    image: "https://www.uk-peptides.com/image/cache/catalog/products/GHRP6-600x600.png"
   },
   {
     id: "ghrp-2-5mg",
@@ -129,7 +138,8 @@ export const PEPTIDES_DATA: PeptideProduct[] = [
     size: "5mg",
     price: 9.95,
     casNumber: "158861-67-7",
-    researchFocus: "Hypothalamic receptor signaling and calcium channel influx"
+    researchFocus: "Hypothalamic receptor signaling and calcium channel influx",
+    image: "https://www.uk-peptides.com/image/cache/catalog/products/GHRP2-600x600.png"
   },
   {
     id: "ace-031-1mg",
@@ -142,7 +152,8 @@ export const PEPTIDES_DATA: PeptideProduct[] = [
     size: "1mg",
     price: 79.00,
     casNumber: "1164565-17-2",
-    researchFocus: "Myostatin inhibition and skeletal cell differentiation"
+    researchFocus: "Myostatin inhibition and skeletal cell differentiation",
+    image: "https://www.uk-peptides.com/image/cache/catalog/products/ACE-031-600x600.png"
   },
   {
     id: "acth-1-39-5mg",
@@ -155,7 +166,8 @@ export const PEPTIDES_DATA: PeptideProduct[] = [
     size: "5mg",
     price: 85.00,
     casNumber: "9002-60-2",
-    researchFocus: "Steroidogenesis pathways and neuroendocrine feedback systems"
+    researchFocus: "Steroidogenesis pathways and neuroendocrine feedback systems",
+    image: "https://www.uk-peptides.com/image/cache/catalog/products/ATCH1-39-small-Recovered-600x600.png"
   },
   {
     id: "adamax-5mg",
@@ -168,7 +180,8 @@ export const PEPTIDES_DATA: PeptideProduct[] = [
     size: "5mg",
     price: 49.00,
     casNumber: "115102-14-2 (Adamantane base)",
-    researchFocus: "Neurotrophic factor BDNF expression and cerebral cell resilience"
+    researchFocus: "Neurotrophic factor BDNF expression and cerebral cell resilience",
+    image: "https://www.uk-peptides.com/image/cache/catalog/adamx-new-600x600.jpg"
   },
   {
     id: "aod-9604-2mg",
@@ -181,7 +194,8 @@ export const PEPTIDES_DATA: PeptideProduct[] = [
     size: "2mg",
     price: 27.95,
     casNumber: "221231-10-3",
-    researchFocus: "Lipolytic pathway signaling and metabolic rate regulation"
+    researchFocus: "Lipolytic pathway signaling and metabolic rate regulation",
+    image: "https://www.uk-peptides.com/image/cache/catalog/AOD-small-600x600.png"
   },
   {
     id: "aod-9604-5mg",
@@ -194,7 +208,8 @@ export const PEPTIDES_DATA: PeptideProduct[] = [
     size: "5mg",
     price: 55.00,
     casNumber: "221231-10-3",
-    researchFocus: "Lipid degradation signaling and adipocyte differentiation"
+    researchFocus: "Lipid degradation signaling and adipocyte differentiation",
+    image: "https://www.uk-peptides.com/image/cache/catalog/products/AOD%209604%205mg-600x600.png"
   },
   {
     id: "ara-290-16mg",
@@ -207,7 +222,8 @@ export const PEPTIDES_DATA: PeptideProduct[] = [
     size: "16mg",
     price: 75.00,
     casNumber: "1208243-50-8",
-    researchFocus: "Innate repair receptor activation and peripheral neuropathy pathways"
+    researchFocus: "Innate repair receptor activation and peripheral neuropathy pathways",
+    image: "https://www.uk-peptides.com/image/cache/catalog/ara29-600x600.jpg"
   },
   {
     id: "b7-33-2mg",
@@ -220,7 +236,8 @@ export const PEPTIDES_DATA: PeptideProduct[] = [
     size: "2mg",
     price: 22.95,
     casNumber: "115102-14-3 (Relaxin-modeled)",
-    researchFocus: "RXFP1 receptor activation and tissue fibrosis modeling"
+    researchFocus: "RXFP1 receptor activation and tissue fibrosis modeling",
+    image: "https://www.uk-peptides.com/image/cache/catalog/b7-33a-small-600x600.jpg"
   },
   {
     id: "bronchogen-20mg",
@@ -233,7 +250,8 @@ export const PEPTIDES_DATA: PeptideProduct[] = [
     size: "20mg",
     price: 39.00,
     casNumber: "9002-60-3 (Respiratory-modeled)",
-    researchFocus: "Respiratory cell line preservation and telomerase regulation"
+    researchFocus: "Respiratory cell line preservation and telomerase regulation",
+    image: "https://www.uk-peptides.com/image/cache/catalog/products/Bronchogen%2020mg-600x600.png"
   },
   {
     id: "cardiogen-20mg",
@@ -246,7 +264,8 @@ export const PEPTIDES_DATA: PeptideProduct[] = [
     size: "20mg",
     price: 49.00,
     casNumber: "947303-05-7",
-    researchFocus: "Myocardial cell protection and fibrotic signal suppression"
+    researchFocus: "Myocardial cell protection and fibrotic signal suppression",
+    image: "https://www.uk-peptides.com/image/cache/catalog/cardiogen-600x600.jpg"
   },
   {
     id: "cartalax-20mg",
@@ -259,7 +278,8 @@ export const PEPTIDES_DATA: PeptideProduct[] = [
     size: "20mg",
     price: 49.00,
     casNumber: "9002-60-4 (Chondro-modeled)",
-    researchFocus: "Chondrocyte regeneration and extracellular joint matrix modeling"
+    researchFocus: "Chondrocyte regeneration and extracellular joint matrix modeling",
+    image: "https://www.uk-peptides.com/image/cache/catalog/products/Cartalax-20mg-600x600.png"
   },
   {
     id: "cjc-1295-with-dac-2mg",
@@ -272,7 +292,8 @@ export const PEPTIDES_DATA: PeptideProduct[] = [
     size: "2mg",
     price: 22.00,
     casNumber: "863288-34-0",
-    researchFocus: "Albumin-conjugated receptor affinity and extended GHRH signaling"
+    researchFocus: "Albumin-conjugated receptor affinity and extended GHRH signaling",
+    image: "https://www.uk-peptides.com/image/cache/catalog/products/CJC-1295-DAC-600x600.png"
   },
   {
     id: "cjc-1295-with-dac-5mg",
@@ -285,7 +306,8 @@ export const PEPTIDES_DATA: PeptideProduct[] = [
     size: "5mg",
     price: 40.00,
     casNumber: "863288-34-0 (Albumin-bound form)",
-    researchFocus: "Continuous steady-state somatotropic cell line modeling"
+    researchFocus: "Continuous steady-state somatotropic cell line modeling",
+    image: "https://www.uk-peptides.com/image/cache/catalog/products/cjc-dac-5mg-600x600.png"
   },
   {
     id: "colivelin-10mg",
@@ -298,7 +320,8 @@ export const PEPTIDES_DATA: PeptideProduct[] = [
     size: "10mg",
     price: 69.99,
     casNumber: "867021-83-8",
-    researchFocus: "STAT3 activation, axonal survival, and amyloid toxicity protection"
+    researchFocus: "STAT3 activation, axonal survival, and amyloid toxicity protection",
+    image: "https://www.uk-peptides.com/image/cache/catalog/products/colivelin-600x600.jpg"
   },
   {
     id: "cortagen-20mg",
@@ -311,7 +334,8 @@ export const PEPTIDES_DATA: PeptideProduct[] = [
     size: "20mg",
     price: 49.00,
     casNumber: "947303-05-8",
-    researchFocus: "Cerebral cell regeneration, stem cell differentiation, and gene expression"
+    researchFocus: "Cerebral cell regeneration, stem cell differentiation, and gene expression",
+    image: "https://www.uk-peptides.com/image/cache/catalog/Cortagen-600x600.jpg"
   },
   {
     id: "crystagen-20mg",
@@ -324,7 +348,8 @@ export const PEPTIDES_DATA: PeptideProduct[] = [
     size: "20mg",
     price: 59.00,
     casNumber: "9002-60-5 (Immune-modeled)",
-    researchFocus: "Lymphocyte protein synthesis and immunogenesis kinetics"
+    researchFocus: "Lymphocyte protein synthesis and immunogenesis kinetics",
+    image: "https://www.uk-peptides.com/image/cache/catalog/crystagen-600x600.jpg"
   },
   {
     id: "dermorphin-2mg",
@@ -337,7 +362,8 @@ export const PEPTIDES_DATA: PeptideProduct[] = [
     size: "2mg",
     price: 29.00,
     casNumber: "77614-16-5",
-    researchFocus: "Mu-opioid receptor localization and pain pathway mapping"
+    researchFocus: "Mu-opioid receptor localization and pain pathway mapping",
+    image: "https://www.uk-peptides.com/image/cache/catalog/dermorphin-small-600x600.png"
   },
   {
     id: "dihexa-10mg",
@@ -350,7 +376,8 @@ export const PEPTIDES_DATA: PeptideProduct[] = [
     size: "10mg",
     price: 59.00,
     casNumber: "1401708-83-5",
-    researchFocus: "HGF pathway activation, spinogenesis, and hippocampal neuron growth"
+    researchFocus: "HGF pathway activation, spinogenesis, and hippocampal neuron growth",
+    image: "https://www.uk-peptides.com/image/cache/catalog/products/Dihexa-600x600.png"
   },
   {
     id: "dnsp-11-5mg",
@@ -363,7 +390,8 @@ export const PEPTIDES_DATA: PeptideProduct[] = [
     size: "5mg",
     price: 75.00,
     casNumber: "1055008-36-8",
-    researchFocus: "Dopaminergic cell preservation and glial-derived survival pathways"
+    researchFocus: "Dopaminergic cell preservation and glial-derived survival pathways",
+    image: "https://www.uk-peptides.com/image/cache/catalog/DNSP11-600x600.jpg"
   },
   {
     id: "dsip-5mg",
@@ -376,7 +404,8 @@ export const PEPTIDES_DATA: PeptideProduct[] = [
     size: "5mg",
     price: 13.95,
     casNumber: "62568-57-4",
-    researchFocus: "Circadian rhythm signaling and stress-induced oxidation protection"
+    researchFocus: "Circadian rhythm signaling and stress-induced oxidation protection",
+    image: "https://www.uk-peptides.com/image/cache/catalog/products/DSIP-600x600.png"
   },
   {
     id: "ghk-cu-50mg",
@@ -389,7 +418,8 @@ export const PEPTIDES_DATA: PeptideProduct[] = [
     size: "50mg",
     price: 26.99,
     casNumber: "49557-75-7",
-    researchFocus: "Fibroblast activation, collagen matrix repair, and gene expression"
+    researchFocus: "Fibroblast activation, collagen matrix repair, and gene expression",
+    image: "https://www.uk-peptides.com/image/cache/catalog/products/GHK-CU-50mg-600x600.jpg"
   },
   {
     id: "pt-141-10mg",
@@ -402,7 +432,8 @@ export const PEPTIDES_DATA: PeptideProduct[] = [
     size: "10mg",
     price: 21.00,
     casNumber: "189691-06-3",
-    researchFocus: "MC3/MC4 melanocortin receptor activation and autonomic signaling pathways"
+    researchFocus: "MC3/MC4 melanocortin receptor activation and autonomic signaling pathways",
+    image: "https://www.uk-peptides.com/image/cache/catalog/products/PT-141-600x600.png"
   },
   {
     id: "tesamorelin-2mg",
@@ -415,7 +446,8 @@ export const PEPTIDES_DATA: PeptideProduct[] = [
     size: "2mg",
     price: 29.00,
     casNumber: "901758-09-6",
-    researchFocus: "Metabolic modeling and growth hormone secretagogue activity"
+    researchFocus: "Metabolic modeling and growth hormone secretagogue activity",
+    image: "https://www.uk-peptides.com/image/cache/catalog/products/tesamorelin-600x600.png"
   }
 ];
 

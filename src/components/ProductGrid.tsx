@@ -1,25 +1,29 @@
 import React, { useState } from "react";
 import { PEPTIDES_DATA } from "../data";
 import { PeptideProduct } from "../types";
-import { Beaker, FlaskConical, FileText, X, Check, HelpCircle } from "lucide-react";
+import { Beaker, FlaskConical, FileText, X, Check, ShoppingCart } from "lucide-react";
 
-export default function ProductGrid() {
+interface ProductGridProps {
+  onAddToCart: (product: PeptideProduct) => void;
+}
+
+export default function ProductGrid({ onAddToCart }: ProductGridProps) {
   const [selectedProduct, setSelectedProduct] = useState<PeptideProduct | null>(null);
-  const [inquiryProduct, setInquiryProduct] = useState<PeptideProduct | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
 
-  const handleInquireSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setInquiryProduct(null);
-    alert("Thank you. Your product inquiry has been compiled. Please submit the contact form with your institution details to complete your verification and place the order.");
-    window.location.hash = "#contact";
-  };
+  // Dynamically extract and sort unique categories
+  const categories = ["All", ...Array.from(new Set(PEPTIDES_DATA.map((p) => p.category)))];
+
+  const filteredProducts = selectedCategory === "All"
+    ? PEPTIDES_DATA
+    : PEPTIDES_DATA.filter((p) => p.category === selectedCategory);
 
   return (
     <section id="products" className="py-20 md:py-28 bg-slate-50/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-4 mb-16">
+        <div className="text-center max-w-3xl mx-auto space-y-4 mb-12">
           <span className="text-xs font-mono font-bold uppercase tracking-widest text-teal-700">
             Analytical Catalogue
           </span>
@@ -32,9 +36,39 @@ export default function ProductGrid() {
           </p>
         </div>
 
+        {/* Shop Category Tabs */}
+        <div className="flex flex-wrap items-center justify-center gap-2.5 mb-12 max-w-5xl mx-auto">
+          {categories.map((category) => {
+            const count = category === "All"
+              ? PEPTIDES_DATA.length
+              : PEPTIDES_DATA.filter((p) => p.category === category).length;
+            
+            const isSelected = selectedCategory === category;
+            
+            return (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-4 py-2 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer flex items-center gap-2 border ${
+                  isSelected
+                    ? "bg-teal-700 text-white border-teal-750 shadow-md"
+                    : "bg-white text-slate-600 border-slate-100 hover:border-slate-200 hover:text-slate-900"
+                }`}
+              >
+                <span>{category === "All" ? "All Compounds" : category}</span>
+                <span className={`px-1.5 py-0.5 rounded-full font-mono text-[9px] ${
+                  isSelected ? "bg-white/20 text-white" : "bg-slate-100 text-slate-400"
+                }`}>
+                  {count}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+
         {/* Responsive Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {PEPTIDES_DATA.map((product) => (
+          {filteredProducts.map((product) => (
             <div
               key={product.id}
               className="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group relative overflow-hidden"
@@ -52,6 +86,16 @@ export default function ProductGrid() {
                     <Check className="w-3.5 h-3.5" />
                     {product.purity} Purity
                   </span>
+                </div>
+
+                {/* Product Image Container */}
+                <div className="relative w-full h-44 bg-slate-50/80 rounded-2xl overflow-hidden flex items-center justify-center p-4 border border-slate-100/50 group-hover:border-teal-100/40 transition-colors duration-300">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    referrerPolicy="no-referrer"
+                    className="h-full w-auto object-contain group-hover:scale-105 transition-transform duration-300"
+                  />
                 </div>
 
                 <div className="space-y-1">
@@ -101,10 +145,11 @@ export default function ProductGrid() {
                     <FileText className="w-5 h-5" />
                   </button>
                   <button
-                    onClick={() => setInquiryProduct(product)}
-                    className="px-4 py-2.5 bg-teal-700 hover:bg-teal-800 text-white font-semibold text-xs tracking-wide uppercase rounded-xl shadow-sm hover:shadow transition-all duration-200 cursor-pointer"
+                    onClick={() => onAddToCart(product)}
+                    className="px-4 py-2.5 bg-teal-700 hover:bg-teal-800 text-white font-semibold text-xs tracking-wide uppercase rounded-xl shadow-sm hover:shadow transition-all duration-200 cursor-pointer flex items-center gap-1.5"
                   >
-                    Enquire
+                    <ShoppingCart className="w-3.5 h-3.5" />
+                    Add to Cart
                   </button>
                 </div>
               </div>
@@ -133,10 +178,10 @@ export default function ProductGrid() {
           </a>
         </div>
 
-        {/* 1. ANALYTICAL SPECIFICATIONS MODAL */}
+        {/* ANALYTICAL SPECIFICATIONS MODAL */}
         {selectedProduct && (
           <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm">
-            <div className="bg-white rounded-3xl max-w-2xl w-full border border-slate-100 shadow-2xl overflow-hidden relative max-h-[90vh] flex flex-col">
+            <div className="bg-white rounded-3xl max-w-2xl w-full border border-slate-100 shadow-2xl overflow-hidden relative max-h-[90vh] flex flex-col animate-in fade-in zoom-in-95 duration-200">
               
               {/* Modal Header */}
               <div className="p-6 border-b border-slate-100 flex justify-between items-center bg-gradient-to-r from-slate-50 to-teal-50/10">
@@ -163,55 +208,72 @@ export default function ProductGrid() {
 
               {/* Modal Scrollable Content */}
               <div className="p-6 space-y-6 overflow-y-auto flex-1 text-sm">
-                <div>
-                  <span className="text-[10px] font-mono uppercase tracking-widest text-teal-700 font-bold block mb-1">
-                    Compound name
-                  </span>
-                  <h4 className="text-xl font-display font-extrabold text-slate-900">
-                    {selectedProduct.name}
-                  </h4>
-                </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {/* Left Column: Product Image */}
+                  <div className="md:col-span-1 flex flex-col items-center justify-start">
+                    <div className="w-full bg-slate-50/80 rounded-2xl p-4 border border-slate-100 flex items-center justify-center aspect-square md:sticky md:top-0">
+                      <img
+                        src={selectedProduct.image}
+                        alt={selectedProduct.name}
+                        referrerPolicy="no-referrer"
+                        className="max-h-full max-w-full object-contain"
+                      />
+                    </div>
+                  </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-100/50">
-                  <div>
-                    <span className="block text-[10px] text-slate-400 font-mono uppercase">Batch Purity</span>
-                    <span className="font-mono font-bold text-teal-800 text-sm mt-0.5 block">{selectedProduct.purity}</span>
-                  </div>
-                  <div>
-                    <span className="block text-[10px] text-slate-400 font-mono uppercase">Vial Content</span>
-                    <span className="font-mono font-bold text-slate-800 text-sm mt-0.5 block">{selectedProduct.size}</span>
-                  </div>
-                  <div>
-                    <span className="block text-[10px] text-slate-400 font-mono uppercase">CAS Registry</span>
-                    <span className="font-mono font-bold text-slate-800 text-sm mt-0.5 block">{selectedProduct.casNumber || "N/A"}</span>
-                  </div>
-                  <div>
-                    <span className="block text-[10px] text-slate-400 font-mono uppercase">Formulation</span>
-                    <span className="font-mono font-bold text-slate-800 text-xs mt-0.5 block truncate">{selectedProduct.formulation}</span>
-                  </div>
-                </div>
+                  {/* Right Column: Product Details */}
+                  <div className="md:col-span-2 space-y-6">
+                    <div>
+                      <span className="text-[10px] font-mono uppercase tracking-widest text-teal-700 font-bold block mb-1">
+                        Compound name
+                      </span>
+                      <h4 className="text-xl font-display font-extrabold text-slate-900 font-sans">
+                        {selectedProduct.name}
+                      </h4>
+                    </div>
 
-                <div className="space-y-2">
-                  <h5 className="font-bold text-slate-900 font-display">Scientific Background</h5>
-                  <p className="text-slate-600 leading-relaxed text-xs sm:text-sm">
-                    {selectedProduct.longDescription}
-                  </p>
-                </div>
+                    <div className="grid grid-cols-2 gap-4 p-4 bg-slate-50 rounded-2xl border border-slate-100/50">
+                      <div>
+                        <span className="block text-[10px] text-slate-400 font-mono uppercase">Batch Purity</span>
+                        <span className="font-mono font-bold text-teal-800 text-sm mt-0.5 block">{selectedProduct.purity}</span>
+                      </div>
+                      <div>
+                        <span className="block text-[10px] text-slate-400 font-mono uppercase">Vial Content</span>
+                        <span className="font-mono font-bold text-slate-800 text-sm mt-0.5 block">{selectedProduct.size}</span>
+                      </div>
+                      <div>
+                        <span className="block text-[10px] text-slate-400 font-mono uppercase">CAS Registry</span>
+                        <span className="font-mono font-bold text-slate-800 text-sm mt-0.5 block">{selectedProduct.casNumber || "N/A"}</span>
+                      </div>
+                      <div>
+                        <span className="block text-[10px] text-slate-400 font-mono uppercase">Formulation</span>
+                        <span className="font-mono font-bold text-slate-800 text-xs mt-0.5 block truncate">{selectedProduct.formulation}</span>
+                      </div>
+                    </div>
 
-                <div className="space-y-2">
-                  <h5 className="font-bold text-slate-900 font-display">Targeted Research Focus</h5>
-                  <div className="p-3 bg-teal-50/50 border border-teal-100 rounded-xl text-teal-950 font-medium text-xs sm:text-sm">
-                    🔍 {selectedProduct.researchFocus}
+                    <div className="space-y-2">
+                      <h5 className="font-bold text-slate-900 font-display text-sm">Scientific Background</h5>
+                      <p className="text-slate-600 leading-relaxed text-xs sm:text-sm">
+                        {selectedProduct.longDescription}
+                      </p>
+                    </div>
+
+                    <div className="space-y-2">
+                      <h5 className="font-bold text-slate-900 font-display text-sm">Targeted Research Focus</h5>
+                      <div className="p-3 bg-teal-50/50 border border-teal-100 rounded-xl text-teal-950 font-medium text-xs sm:text-sm">
+                        🔍 {selectedProduct.researchFocus}
+                      </div>
+                    </div>
+
+                    <div className="bg-amber-50 border border-amber-100 rounded-2xl p-4 space-y-1">
+                      <h5 className="font-bold text-amber-900 text-xs uppercase font-mono flex items-center gap-1.5">
+                        ⚠️ Statutory compliance warning
+                      </h5>
+                      <p className="text-[11px] text-amber-800 leading-normal">
+                        This compound is distributed exclusively for research use and analytical standardisation within academic, clinical, or chemical research environments. It is strictly not intended, licensed, or approved for clinical administration or human use.
+                      </p>
+                    </div>
                   </div>
-                </div>
-
-                <div className="bg-amber-50 border border-amber-100 rounded-2xl p-4 space-y-1">
-                  <h5 className="font-bold text-amber-900 text-xs uppercase font-mono flex items-center gap-1.5">
-                    ⚠️ Statutory compliance warning
-                  </h5>
-                  <p className="text-[11px] text-amber-800 leading-normal">
-                    This compound is distributed exclusively for research use and analytical standardisation within academic, clinical, or chemical research environments. It is strictly not intended, licensed, or approved for clinical administration or human use.
-                  </p>
                 </div>
               </div>
 
@@ -225,87 +287,16 @@ export default function ProductGrid() {
                 </div>
                 <button
                   onClick={() => {
-                    setInquiryProduct(selectedProduct);
+                    onAddToCart(selectedProduct);
                     setSelectedProduct(null);
                   }}
-                  className="px-5 py-3 bg-teal-700 hover:bg-teal-800 text-white font-semibold text-xs tracking-wider uppercase rounded-xl transition-colors cursor-pointer"
+                  className="px-5 py-3 bg-teal-700 hover:bg-teal-800 text-white font-semibold text-xs tracking-wider uppercase rounded-xl transition-colors cursor-pointer flex items-center gap-1.5"
                 >
-                  Create Inquiry
+                  <ShoppingCart className="w-4 h-4" />
+                  Add to Cart
                 </button>
               </div>
 
-            </div>
-          </div>
-        )}
-
-        {/* 2. COMPLIANT INQUIRY / PROCUREMENT MODAL */}
-        {inquiryProduct && (
-          <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm">
-            <div className="bg-white rounded-3xl max-w-md w-full border border-slate-100 shadow-2xl p-6 relative">
-              <button
-                onClick={() => setInquiryProduct(null)}
-                className="absolute top-4 right-4 p-2 rounded-lg text-slate-400 hover:text-slate-600 hover:bg-slate-50 transition-colors"
-              >
-                <X className="w-5 h-5" />
-              </button>
-
-              <div className="space-y-6">
-                <div className="flex items-center gap-3 text-teal-700">
-                  <HelpCircle className="w-8 h-8 flex-shrink-0" />
-                  <div>
-                    <h3 className="font-display font-bold text-lg text-slate-900 leading-none">
-                      Procurement Inquiry
-                    </h3>
-                    <p className="text-[11px] text-slate-400 font-mono mt-1">
-                      {inquiryProduct.name}
-                    </p>
-                  </div>
-                </div>
-
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  In absolute adherence with UK medical regulations, chemical compounds cannot be purchased through direct click-to-buy retail mechanisms. 
-                </p>
-
-                <div className="bg-slate-50 p-4 rounded-2xl border border-slate-100 text-xs space-y-3">
-                  <h4 className="font-bold text-slate-800">Inquiry Specifications:</h4>
-                  <div className="grid grid-cols-2 gap-2 font-mono">
-                    <span className="text-slate-400">Purity:</span>
-                    <span className="text-slate-700 text-right font-bold">{inquiryProduct.purity}</span>
-                    <span className="text-slate-400">Unit Size:</span>
-                    <span className="text-slate-700 text-right font-bold">{inquiryProduct.size}</span>
-                    <span className="text-slate-400">Indicative Price:</span>
-                    <span className="text-teal-700 text-right font-bold">£{inquiryProduct.price.toFixed(2)} GBP</span>
-                  </div>
-                </div>
-
-                <form onSubmit={handleInquireSubmit} className="space-y-4">
-                  <div className="space-y-1">
-                    <label className="block text-[10px] text-slate-400 uppercase font-mono">Institutional Affiliation *</label>
-                    <input
-                      required
-                      type="text"
-                      placeholder="e.g. University of Manchester Chemistry Lab"
-                      className="w-full px-4 py-2.5 text-xs border border-slate-200 rounded-xl focus:border-teal-700 focus:outline-none"
-                    />
-                  </div>
-                  <div className="space-y-1">
-                    <label className="block text-[10px] text-slate-400 uppercase font-mono">Intended Research Application *</label>
-                    <textarea
-                      required
-                      rows={2}
-                      placeholder="e.g. In-vitro cell-migration study (strictly non-clinical)"
-                      className="w-full px-4 py-2.5 text-xs border border-slate-200 rounded-xl focus:border-teal-700 focus:outline-none resize-none"
-                    />
-                  </div>
-
-                  <button
-                    type="submit"
-                    className="w-full py-3 bg-teal-700 hover:bg-teal-800 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md"
-                  >
-                    Confirm Specifications
-                  </button>
-                </form>
-              </div>
             </div>
           </div>
         )}

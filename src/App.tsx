@@ -17,6 +17,11 @@ import ContactSection from "./components/ContactSection";
 import Footer from "./components/Footer";
 import BackToTop from "./components/BackToTop";
 
+import FeaturedProducts from "./components/FeaturedProducts";
+import HomeFAQ from "./components/HomeFAQ";
+import CartDrawer from "./components/CartDrawer";
+import { CartItem, PeptideProduct } from "./types";
+
 // Page Header Component for separate pages
 interface PageHeaderProps {
   title: string;
@@ -193,6 +198,61 @@ function HomeTeaser() {
 
 export default function App() {
   const [currentPage, setCurrentPage] = useState("home");
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [cart, setCart] = useState<CartItem[]>(() => {
+    try {
+      const stored = localStorage.getItem("uk_peptide_cart");
+      return stored ? JSON.parse(stored) : [];
+    } catch (e) {
+      return [];
+    }
+  });
+
+  // Sync cart state with LocalStorage for durable persistence
+  useEffect(() => {
+    try {
+      localStorage.setItem("uk_peptide_cart", JSON.stringify(cart));
+    } catch (e) {
+      // Catch exceptions gracefully
+    }
+  }, [cart]);
+
+  // Cart operations
+  const addToCart = (product: PeptideProduct) => {
+    setCart((prev) => {
+      const existing = prev.find((item) => item.product.id === product.id);
+      if (existing) {
+        return prev.map((item) =>
+          item.product.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      }
+      return [...prev, { product, quantity: 1 }];
+    });
+    // Open cart drawer immediately to provide visual confirmation
+    setIsCartOpen(true);
+  };
+
+  const updateCartQuantity = (productId: string, quantity: number) => {
+    if (quantity <= 0) {
+      removeFromCart(productId);
+      return;
+    }
+    setCart((prev) =>
+      prev.map((item) =>
+        item.product.id === productId ? { ...item, quantity } : item
+      )
+    );
+  };
+
+  const removeFromCart = (productId: string) => {
+    setCart((prev) => prev.filter((item) => item.product.id !== productId));
+  };
+
+  const clearCart = () => {
+    setCart([]);
+  };
 
   // Sync state with URL hash
   useEffect(() => {
@@ -215,10 +275,16 @@ export default function App() {
     return () => window.removeEventListener("hashchange", handleHashChange);
   }, []);
 
+  const totalCartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
+
   return (
     <div className="min-h-screen flex flex-col selection:bg-teal-600 selection:text-white bg-slate-50/30">
       {/* Sticky header and navigation */}
-      <Header activePage={currentPage} />
+      <Header
+        activePage={currentPage}
+        cartCount={totalCartCount}
+        onCartOpenClick={() => setIsCartOpen(true)}
+      />
       
       {/* Page Content sections with custom motion route transition */}
       <main className="flex-grow">
@@ -234,6 +300,8 @@ export default function App() {
             {currentPage === "home" && (
               <>
                 <Hero />
+                <FeaturedProducts onAddToCart={addToCart} />
+                <HomeFAQ />
                 <HomeTeaser />
               </>
             )}
@@ -256,7 +324,7 @@ export default function App() {
                   title="Premium Peptide Reference Standards" 
                   subtitle="HPLC and Mass Spectrometry double-verified compounds lyophilised under class-100 sterile conditions. For research use only."
                 />
-                <ProductGrid />
+                <ProductGrid onAddToCart={addToCart} />
               </>
             )}
 
@@ -301,6 +369,16 @@ export default function App() {
       
       {/* Scroll-to-top floating helper */}
       <BackToTop />
+
+      {/* Slide-over Cart Drawer */}
+      <CartDrawer
+        isOpen={isCartOpen}
+        onClose={() => setIsCartOpen(false)}
+        cart={cart}
+        updateCartQuantity={updateCartQuantity}
+        removeFromCart={removeFromCart}
+        clearCart={clearCart}
+      />
     </div>
   );
 }
