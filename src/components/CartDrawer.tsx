@@ -26,6 +26,7 @@ export default function CartDrawer({
   const [form, setForm] = useState({
     name: "",
     email: "",
+    phone: "",
     institution: "",
     purpose: "",
     paymentMethod: "bank_transfer",
@@ -68,6 +69,10 @@ export default function CartDrawer({
       tempErrors.email = "Valid institutional email is required";
       isValid = false;
     }
+    if (!form.phone.trim() || form.phone.trim().length < 6) {
+      tempErrors.phone = "Valid contact phone number is required";
+      isValid = false;
+    }
     if (!form.institution.trim()) {
       tempErrors.institution = "Institutional or research affiliation is required";
       isValid = false;
@@ -100,6 +105,7 @@ export default function CartDrawer({
     setForm({
       name: "",
       email: "",
+      phone: "",
       institution: "",
       purpose: "",
       paymentMethod: "bank_transfer",
@@ -216,6 +222,23 @@ export default function CartDrawer({
                       }`}
                     />
                     {errors.email && <p className="text-[10px] text-red-500">{errors.email}</p>}
+                  </div>
+
+                  {/* Phone Number Field */}
+                  <div className="space-y-1">
+                    <label className="block text-[10px] text-slate-400 font-mono uppercase">Contact Phone Number *</label>
+                    <input
+                      required
+                      type="tel"
+                      name="phone"
+                      value={form.phone}
+                      onChange={handleInputChange}
+                      placeholder="e.g. +44 20 7946 0192"
+                      className={`w-full px-4 py-2.5 text-xs border rounded-xl focus:border-teal-700 focus:outline-none bg-white ${
+                        errors.phone ? "border-red-400" : "border-slate-200"
+                      }`}
+                    />
+                    {errors.phone && <p className="text-[10px] text-red-500">{errors.phone}</p>}
                   </div>
 
                   {/* Institution */}

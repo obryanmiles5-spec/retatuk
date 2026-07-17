@@ -23,8 +23,33 @@ export default function Hero() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-          {/* Text Content */}
-          <div className="lg:col-span-7 space-y-8 text-center lg:text-left">
+          {/* Graphics/Image Display Column - Left on Desktop, Bottom on Mobile */}
+          <div className="lg:col-span-5 order-2 lg:order-1 relative flex justify-center items-center h-full">
+            <div className="relative w-full max-w-md bg-white border border-slate-200/60 rounded-3xl overflow-hidden shadow-xl aspect-[4/3] sm:aspect-[16/10] lg:aspect-[4/5] min-h-[350px] lg:min-h-[460px] group">
+              <img
+                src="https://lh3.googleusercontent.com/d/1C0byYOq96K9JbKqWPATH2_B7_3fElnMv"
+                alt="UK Peptide Labs Crystallised High Purity Peptides"
+                referrerPolicy="no-referrer"
+                className="w-full h-full object-cover group-hover:scale-101 transition-transform duration-700"
+              />
+              {/* Subtle bottom gradient to blend image and add clean premium layer */}
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/30 via-transparent to-transparent pointer-events-none" />
+              
+              {/* Lab Authenticity Badge */}
+              <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-md border border-slate-200/50 rounded-2xl p-3 flex items-center gap-3 shadow-md">
+                <Beaker className="w-5 h-5 text-teal-700 flex-shrink-0" />
+                <div>
+                  <h4 className="text-xs font-bold text-slate-900">Certified Laboratory Standard</h4>
+                  <p className="text-[10px] text-slate-500 mt-0.5 leading-normal">
+                    Batch-synthesised and strictly validated for institutional research.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Text Content - Right on Desktop, Top on Mobile */}
+          <div className="lg:col-span-7 order-1 lg:order-2 space-y-8 text-center lg:text-left">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-teal-50 border border-teal-100 rounded-full text-teal-800 text-xs font-semibold tracking-wider uppercase">
               <span className="w-2 h-2 rounded-full bg-teal-500 animate-pulse" />
               UK Chemical Analytical Standards
@@ -81,31 +106,6 @@ export default function Hero() {
                 <span className="text-xs font-semibold text-slate-700 tracking-wide text-left">
                   Strictly Non-Clinical Standards
                 </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Graphics/Image Display Column */}
-          <div className="lg:col-span-5 relative flex justify-center items-center h-full">
-            <div className="relative w-full max-w-md bg-white border border-slate-200/60 rounded-3xl overflow-hidden shadow-xl aspect-[4/3] sm:aspect-[16/10] lg:aspect-[4/5] min-h-[350px] lg:min-h-[460px] group">
-              <img
-                src="https://lh3.googleusercontent.com/d/1C0byYOq96K9JbKqWPATH2_B7_3fElnMv"
-                alt="UK Peptide Labs Crystallised High Purity Peptides"
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-cover group-hover:scale-101 transition-transform duration-700"
-              />
-              {/* Subtle bottom gradient to blend image and add clean premium layer */}
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/30 via-transparent to-transparent pointer-events-none" />
-              
-              {/* Lab Authenticity Badge */}
-              <div className="absolute bottom-4 left-4 right-4 bg-white/90 backdrop-blur-md border border-slate-200/50 rounded-2xl p-3 flex items-center gap-3 shadow-md">
-                <Beaker className="w-5 h-5 text-teal-700 flex-shrink-0" />
-                <div>
-                  <h4 className="text-xs font-bold text-slate-900">Certified Laboratory Standard</h4>
-                  <p className="text-[10px] text-slate-500 mt-0.5 leading-normal">
-                    Batch-synthesised and strictly validated for institutional research.
-                  </p>
-                </div>
               </div>
             </div>
           </div>

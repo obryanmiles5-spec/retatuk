@@ -36,125 +36,145 @@ export default function ProductGrid({ onAddToCart }: ProductGridProps) {
           </p>
         </div>
 
-        {/* Shop Category Tabs */}
-        <div className="flex flex-wrap items-center justify-center gap-2.5 mb-12 max-w-5xl mx-auto">
-          {categories.map((category) => {
-            const count = category === "All"
-              ? PEPTIDES_DATA.length
-              : PEPTIDES_DATA.filter((p) => p.category === category).length;
-            
-            const isSelected = selectedCategory === category;
-            
-            return (
-              <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`px-4 py-2 rounded-2xl text-xs font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer flex items-center gap-2 border ${
-                  isSelected
-                    ? "bg-teal-700 text-white border-teal-750 shadow-md"
-                    : "bg-white text-slate-600 border-slate-100 hover:border-slate-200 hover:text-slate-900"
-                }`}
-              >
-                <span>{category === "All" ? "All Compounds" : category}</span>
-                <span className={`px-1.5 py-0.5 rounded-full font-mono text-[9px] ${
-                  isSelected ? "bg-white/20 text-white" : "bg-slate-100 text-slate-400"
-                }`}>
-                  {count}
-                </span>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Responsive Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProducts.map((product) => (
-            <div
-              key={product.id}
-              className="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group relative overflow-hidden"
-            >
-              {/* Top border decor accent */}
-              <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-teal-500/20 to-teal-700/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-
-              {/* Card Header */}
-              <div className="space-y-4">
-                <div className="flex justify-between items-start">
-                  <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-semibold bg-teal-50 text-teal-800 border border-teal-100 uppercase tracking-wider">
-                    {product.category}
-                  </span>
-                  <span className="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 border border-emerald-100 px-2.5 py-1 rounded-md flex items-center gap-1">
-                    <Check className="w-3.5 h-3.5" />
-                    {product.purity} Purity
-                  </span>
-                </div>
-
-                {/* Product Image Container */}
-                <div className="relative w-full h-44 bg-slate-50/80 rounded-2xl overflow-hidden flex items-center justify-center p-4 border border-slate-100/50 group-hover:border-teal-100/40 transition-colors duration-300">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    referrerPolicy="no-referrer"
-                    className="h-full w-auto object-contain group-hover:scale-105 transition-transform duration-300"
-                  />
-                </div>
-
-                <div className="space-y-1">
-                  <h3 className="font-display font-bold text-xl text-slate-900 tracking-tight group-hover:text-teal-800 transition-colors">
-                    {product.name}
-                  </h3>
-                  {product.casNumber && (
-                    <span className="block text-[10px] font-mono text-slate-400">
-                      CAS: {product.casNumber}
-                    </span>
-                  )}
-                </div>
-
-                <p className="text-sm text-slate-600 line-clamp-3 leading-relaxed">
-                  {product.description}
-                </p>
-
-                {/* Spec Indicators */}
-                <div className="grid grid-cols-2 gap-3 pt-3 border-t border-slate-50 text-xs">
-                  <div>
-                    <span className="block text-[10px] text-slate-400 font-mono uppercase tracking-wider">Standard unit</span>
-                    <span className="font-bold text-slate-700 mt-0.5 block">{product.size} Vial</span>
-                  </div>
-                  <div>
-                    <span className="block text-[10px] text-slate-400 font-mono uppercase tracking-wider">Formulation</span>
-                    <span className="font-bold text-slate-700 mt-0.5 block truncate">{product.formulation.split(" ")[0]} Crystals</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Card Footer / Pricing & Actions */}
-              <div className="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between gap-4">
-                <div className="flex flex-col">
-                  <span className="text-[10px] text-slate-400 uppercase font-mono tracking-wider">Indicative price</span>
-                  <span className="text-2xl font-display font-extrabold text-slate-900 leading-none">
-                    £{product.price.toFixed(2)}
-                    <span className="text-xs text-slate-500 font-normal ml-0.5"> GBP</span>
-                  </span>
-                </div>
-
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={() => setSelectedProduct(product)}
-                    className="p-2.5 text-slate-500 hover:text-teal-700 hover:bg-teal-50 border border-slate-100 hover:border-teal-100 rounded-xl transition-all duration-200 cursor-pointer"
-                    title="View analytical specifications"
-                  >
-                    <FileText className="w-5 h-5" />
-                  </button>
-                  <button
-                    onClick={() => onAddToCart(product)}
-                    className="px-4 py-2.5 bg-teal-700 hover:bg-teal-800 text-white font-semibold text-xs tracking-wide uppercase rounded-xl shadow-sm hover:shadow transition-all duration-200 cursor-pointer flex items-center gap-1.5"
-                  >
-                    <ShoppingCart className="w-3.5 h-3.5" />
-                    Add to Cart
-                  </button>
-                </div>
-              </div>
+        {/* Main Section Content Wrapper: Sidebar Layout on Desktop */}
+        <div className="flex flex-col lg:flex-row gap-8 items-start mt-12">
+          
+          {/* Left Category Sidebar */}
+          <div className="w-full lg:w-64 shrink-0 lg:sticky lg:top-28 space-y-4">
+            {/* Header label for categories - visible on desktop only */}
+            <div className="hidden lg:block pb-3 border-b border-slate-200">
+              <h3 className="font-display font-extrabold text-slate-800 text-xs uppercase tracking-wider">
+                Categories
+              </h3>
+              <p className="text-[10px] text-slate-400 mt-1 leading-normal font-medium">
+                Filter analytical standards
+              </p>
             </div>
-          ))}
+            
+            {/* Category selection list - horizontal scrolling row on mobile, stacked column on desktop */}
+            <div className="flex flex-row overflow-x-auto lg:overflow-visible pb-3 lg:pb-0 lg:flex-col gap-2 -mx-4 px-4 lg:mx-0 lg:px-0 scrollbar-thin scrollbar-thumb-teal-600/20">
+              {categories.map((category) => {
+                const count = category === "All"
+                  ? PEPTIDES_DATA.length
+                  : PEPTIDES_DATA.filter((p) => p.category === category).length;
+                
+                const isSelected = selectedCategory === category;
+                
+                return (
+                  <button
+                    key={category}
+                    onClick={() => setSelectedCategory(category)}
+                    className={`flex-shrink-0 lg:w-full text-left px-4 py-2.5 lg:py-3.5 lg:px-4 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-200 cursor-pointer flex items-center justify-between gap-3 border ${
+                      isSelected
+                        ? "bg-teal-700 text-white border-teal-800 shadow-md shadow-teal-700/10"
+                        : "bg-white text-slate-600 border-slate-100 hover:border-slate-200 hover:text-slate-900"
+                    }`}
+                  >
+                    <span className="truncate">{category === "All" ? "All Compounds" : category}</span>
+                    <span className={`px-1.5 py-0.5 rounded-full font-mono text-[9px] ${
+                      isSelected ? "bg-white/20 text-white" : "bg-slate-100 text-slate-400"
+                    }`}>
+                      {count}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Right Product Grid Area */}
+          <div className="flex-1 w-full">
+            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+              {filteredProducts.map((product) => (
+                <div
+                  key={product.id}
+                  className="bg-white border border-slate-100 rounded-3xl p-6 shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between group relative overflow-hidden"
+                >
+                  {/* Top border decor accent */}
+                  <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-teal-500/20 to-teal-700/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+                  {/* Card Header */}
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-start">
+                      <span className="inline-flex items-center px-2.5 py-1 rounded-full text-[10px] font-semibold bg-teal-50 text-teal-800 border border-teal-100 uppercase tracking-wider">
+                        {product.category}
+                      </span>
+                      <span className="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 border border-emerald-100 px-2.5 py-1 rounded-md flex items-center gap-1">
+                        <Check className="w-3.5 h-3.5" />
+                        {product.purity} Purity
+                      </span>
+                    </div>
+
+                    {/* Product Image Container */}
+                    <div className="relative w-full h-44 bg-slate-50/80 rounded-2xl overflow-hidden flex items-center justify-center p-4 border border-slate-100/50 group-hover:border-teal-100/40 transition-colors duration-300">
+                      <img
+                        src={product.image}
+                        alt={product.name}
+                        referrerPolicy="no-referrer"
+                        className="h-full w-auto object-contain group-hover:scale-105 transition-transform duration-300"
+                      />
+                    </div>
+
+                    <div className="space-y-1">
+                      <h3 className="font-display font-bold text-xl text-slate-900 tracking-tight group-hover:text-teal-800 transition-colors">
+                        {product.name}
+                      </h3>
+                      {product.casNumber && (
+                        <span className="block text-[10px] font-mono text-slate-400">
+                          CAS: {product.casNumber}
+                        </span>
+                      )}
+                    </div>
+
+                    <p className="text-sm text-slate-600 line-clamp-3 leading-relaxed">
+                      {product.description}
+                    </p>
+
+                    {/* Spec Indicators */}
+                    <div className="grid grid-cols-2 gap-3 pt-3 border-t border-slate-50 text-xs">
+                      <div>
+                        <span className="block text-[10px] text-slate-400 font-mono uppercase tracking-wider">Standard unit</span>
+                        <span className="font-bold text-slate-700 mt-0.5 block">{product.size} Vial</span>
+                      </div>
+                      <div>
+                        <span className="block text-[10px] text-slate-400 font-mono uppercase tracking-wider">Formulation</span>
+                        <span className="font-bold text-slate-700 mt-0.5 block truncate">{product.formulation.split(" ")[0]} Crystals</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Card Footer / Pricing & Actions */}
+                  <div className="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between gap-4">
+                    <div className="flex flex-col">
+                      <span className="text-[10px] text-slate-400 uppercase font-mono tracking-wider">Indicative price</span>
+                      <span className="text-2xl font-display font-extrabold text-slate-900 leading-none">
+                        £{product.price.toFixed(2)}
+                        <span className="text-xs text-slate-500 font-normal ml-0.5"> GBP</span>
+                      </span>
+                    </div>
+
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => setSelectedProduct(product)}
+                        className="p-2.5 text-slate-500 hover:text-teal-700 hover:bg-teal-50 border border-slate-100 hover:border-teal-100 rounded-xl transition-all duration-200 cursor-pointer"
+                        title="View analytical specifications"
+                      >
+                        <FileText className="w-5 h-5" />
+                      </button>
+                      <button
+                        onClick={() => onAddToCart(product)}
+                        className="px-4 py-2.5 bg-teal-700 hover:bg-teal-800 text-white font-semibold text-xs tracking-wide uppercase rounded-xl shadow-sm hover:shadow transition-all duration-200 cursor-pointer flex items-center gap-1.5"
+                      >
+                        <ShoppingCart className="w-3.5 h-3.5" />
+                        Add to Cart
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
         </div>
 
         {/* COMPLIANT PROCUREMENT NOTE */}

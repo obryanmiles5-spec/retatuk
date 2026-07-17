@@ -31,7 +31,16 @@ interface PageHeaderProps {
 
 function PageHeader({ title, subtitle, badge }: PageHeaderProps) {
   return (
-    <div className="relative pt-36 pb-16 bg-gradient-to-b from-slate-900 to-slate-950 text-white overflow-hidden border-b border-slate-800">
+    <div 
+      className="relative mt-28 mx-4 sm:mx-6 lg:mx-8 py-20 bg-cover bg-center text-white overflow-hidden rounded-3xl border border-slate-200/50 shadow-md"
+      style={{
+        backgroundImage: `url("https://lh3.googleusercontent.com/d/13iU6B1n3XH4PRd61gy337zfN7aeGlf1W")`
+      }}
+    >
+      {/* Semi-transparent overlay to make background image beautiful and visible while preserving white text contrast */}
+      <div className="absolute inset-0 bg-gradient-to-r from-slate-950/65 via-slate-900/55 to-slate-950/65" />
+      <div className="absolute inset-0 bg-teal-950/10 blend-multiply" />
+      
       {/* Subtle tech grid pattern */}
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#2dd4bf_1px,transparent_1px)] [background-size:16px_16px]" />
       
