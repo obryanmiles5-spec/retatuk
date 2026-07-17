@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Menu, X, ShoppingCart } from "lucide-react";
+import { Menu, X, ShoppingCart, Instagram, Facebook } from "lucide-react";
 import Logo from "./Logo";
 
 interface HeaderProps {
@@ -29,7 +29,6 @@ export default function Header({ activePage, cartCount, onCartOpenClick }: Heade
     { label: "Home", href: "#home", id: "home" },
     { label: "About", href: "#about", id: "about" },
     { label: "Products", href: "#products", id: "products" },
-    { label: "Safety & Compliance", href: "#safety", id: "safety" },
     { label: "FAQs", href: "#faqs", id: "faqs" },
     { label: "Contact Us", href: "#contact", id: "contact" },
   ];
@@ -102,6 +101,45 @@ export default function Header({ activePage, cartCount, onCartOpenClick }: Heade
                 </span>
               )}
             </button>
+
+            {/* Social Icons */}
+            <div className="hidden lg:flex items-center gap-1.5 ml-2.5 pl-3 border-l border-slate-200/80">
+              <a
+                href="https://www.tiktok.com/@buy_peptides_online?_r=1&_t=ZS-986j3hq0zvc"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`p-2 rounded-full transition-all duration-200 hover:text-teal-700 hover:bg-slate-50 flex items-center justify-center cursor-pointer ${
+                  isScrolled ? "text-slate-500" : "text-slate-600 hover:bg-white/40"
+                }`}
+                title="Follow us on TikTok"
+              >
+                <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.02 1.59 4.23.95 1.15 2.27 1.93 3.71 2.22l-.01 3.97c-1.21-.12-2.39-.58-3.41-1.25-.87-.58-1.59-1.37-2.11-2.28a9.42 9.42 0 0 1-.16 3.19c-.31 1.76-1.12 3.4-2.35 4.69a9.6 9.6 0 0 1-5.18 2.87c-1.92.38-3.92.11-5.69-.76A9.72 9.72 0 0 1 .49 11.72c-.52-1.89-.37-3.92.42-5.71A9.82 9.82 0 0 1 5.92 1.34c1.88-.51 3.92-.35 5.69.46.01 1.44.01 2.88.02 4.31-.9-.55-1.95-.82-3-.76a5.18 5.18 0 0 0-4.04 2.85 5.37 5.37 0 0 0 .19 4.32c.76 1.48 2.28 2.45 3.93 2.5a5.19 5.19 0 0 0 4.32-2.32c.52-.86.75-1.87.66-2.88.01-4.41.01-8.83.02-13.24Z" />
+                </svg>
+              </a>
+              <a
+                href="https://www.instagram.com/buy_peptides_online_?igsh=NDFwcTAyaDY0b2g2"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`p-2 rounded-full transition-all duration-200 hover:text-teal-700 hover:bg-slate-50 flex items-center justify-center cursor-pointer ${
+                  isScrolled ? "text-slate-500" : "text-slate-600 hover:bg-white/40"
+                }`}
+                title="Follow us on Instagram"
+              >
+                <Instagram className="w-4 h-4" />
+              </a>
+              <a
+                href="https://www.facebook.com/share/p/1Y2GX7aqWQ/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`p-2 rounded-full transition-all duration-200 hover:text-teal-700 hover:bg-slate-50 flex items-center justify-center cursor-pointer ${
+                  isScrolled ? "text-slate-500" : "text-slate-600 hover:bg-white/40"
+                }`}
+                title="Follow us on Facebook"
+              >
+                <Facebook className="w-4 h-4" />
+              </a>
+            </div>
           </nav>
 
           {/* Right Side Accessories for Mobile */}
@@ -162,6 +200,39 @@ export default function Header({ activePage, cartCount, onCartOpenClick }: Heade
           >
             Shop Peptides
           </a>
+
+          {/* Mobile Social Links inside Drawer */}
+          <div className="flex items-center justify-center gap-4 py-4 mt-3 border-t border-slate-100">
+            <a
+              href="https://www.tiktok.com/@buy_peptides_online?_r=1&_t=ZS-986j3hq0zvc"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2.5 bg-slate-50 hover:bg-teal-50 hover:text-teal-700 rounded-xl border border-slate-150 text-slate-500 transition-colors flex items-center justify-center cursor-pointer"
+              title="TikTok"
+            >
+              <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.02 1.59 4.23.95 1.15 2.27 1.93 3.71 2.22l-.01 3.97c-1.21-.12-2.39-.58-3.41-1.25-.87-.58-1.59-1.37-2.11-2.28a9.42 9.42 0 0 1-.16 3.19c-.31 1.76-1.12 3.4-2.35 4.69a9.6 9.6 0 0 1-5.18 2.87c-1.92.38-3.92.11-5.69-.76A9.72 9.72 0 0 1 .49 11.72c-.52-1.89-.37-3.92.42-5.71A9.82 9.82 0 0 1 5.92 1.34c1.88-.51 3.92-.35 5.69.46.01 1.44.01 2.88.02 4.31-.9-.55-1.95-.82-3-.76a5.18 5.18 0 0 0-4.04 2.85 5.37 5.37 0 0 0 .19 4.32c.76 1.48 2.28 2.45 3.93 2.5a5.19 5.19 0 0 0 4.32-2.32c.52-.86.75-1.87.66-2.88.01-4.41.01-8.83.02-13.24Z" />
+              </svg>
+            </a>
+            <a
+              href="https://www.instagram.com/buy_peptides_online_?igsh=NDFwcTAyaDY0b2g2"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2.5 bg-slate-50 hover:bg-teal-50 hover:text-teal-700 rounded-xl border border-slate-150 text-slate-500 transition-colors flex items-center justify-center cursor-pointer"
+              title="Instagram"
+            >
+              <Instagram className="w-5 h-5" />
+            </a>
+            <a
+              href="https://www.facebook.com/share/p/1Y2GX7aqWQ/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-2.5 bg-slate-50 hover:bg-teal-50 hover:text-teal-700 rounded-xl border border-slate-150 text-slate-500 transition-colors flex items-center justify-center cursor-pointer"
+              title="Facebook"
+            >
+              <Facebook className="w-5 h-5" />
+            </a>
+          </div>
         </div>
       )}
     </header>

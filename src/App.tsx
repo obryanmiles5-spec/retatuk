@@ -20,6 +20,7 @@ import BackToTop from "./components/BackToTop";
 import FeaturedProducts from "./components/FeaturedProducts";
 import HomeFAQ from "./components/HomeFAQ";
 import CartDrawer from "./components/CartDrawer";
+import WhatsAppLiveChat from "./components/WhatsAppLiveChat";
 import { CartItem, PeptideProduct } from "./types";
 
 // Page Header Component for separate pages
@@ -378,6 +379,9 @@ export default function App() {
       
       {/* Scroll-to-top floating helper */}
       <BackToTop />
+
+      {/* Floating WhatsApp Live Chat Widget */}
+      <WhatsAppLiveChat />
 
       {/* Slide-over Cart Drawer */}
       <CartDrawer

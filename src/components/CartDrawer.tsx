@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { X, ShoppingCart, Plus, Minus, Trash2, ShieldCheck, AlertCircle, CheckCircle, ArrowRight } from "lucide-react";
+import { X, ShoppingCart, Plus, Minus, Trash2, ShieldCheck, AlertCircle, CheckCircle, ArrowRight, Mail, Send, MessageSquare } from "lucide-react";
 import { CartItem } from "../types";
 
 interface CartDrawerProps {
@@ -26,6 +26,7 @@ export default function CartDrawer({
   const [form, setForm] = useState({
     name: "",
     email: "",
+    registryNumber: "",
     phone: "",
     institution: "",
     purpose: "",
@@ -52,8 +53,10 @@ export default function CartDrawer({
     }
   };
 
-  const handleCheckoutSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const [checkoutMethod, setCheckoutMethod] = useState<"email" | "whatsapp" | null>(null);
+  const [whatsappMsgUrl, setWhatsappMsgUrl] = useState("");
+
+  const triggerCheckout = (method: "email" | "whatsapp") => {
     if (subtotal < 99) {
       return; // Prevent submissions below minimum order
     }
@@ -67,6 +70,10 @@ export default function CartDrawer({
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!form.email || !emailRegex.test(form.email)) {
       tempErrors.email = "Valid institutional email is required";
+      isValid = false;
+    }
+    if (!form.registryNumber.trim()) {
+      tempErrors.registryNumber = "Lab Registry ID or Academic License Number is required";
       isValid = false;
     }
     if (!form.phone.trim() || form.phone.trim().length < 6) {
@@ -92,19 +99,62 @@ export default function CartDrawer({
     }
 
     setIsSubmitting(true);
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSubmitted(true);
-      clearCart();
-    }, 1500);
+    setCheckoutMethod(method);
+
+    if (method === "whatsapp") {
+      const orderItemsText = cart
+        .map(
+          (item) =>
+            `- ${item.product.name} (${item.product.size}, ${item.product.purity} Purity) x ${item.quantity} = £${(
+              item.product.price * item.quantity
+            ).toFixed(2)}`
+        )
+        .join("\n");
+
+      const messageText = `🔬 *UK PEPTIDE LABS - PROCUREMENT INQUIRY*
+----------------------------------------
+*Principal Researcher:* ${form.name}
+*Institutional Email:* ${form.email}
+*Lab Registry ID/Licence:* ${form.registryNumber}
+*Contact Phone:* ${form.phone}
+*Research Affiliation:* ${form.institution}
+*Intended Application:* ${form.purpose}
+*Preferred Payment:* ${form.paymentMethod === "bank_transfer" ? "Bank Transfer" : "Gift Card"}
+
+*Order Details:*
+${orderItemsText}
+
+*Total Subtotal:* £${subtotal.toFixed(2)} GBP
+
+*Compliance Verification:* I verify that these reference standard compounds are destined strictly for in-vitro research and laboratory testing, in compliance with UK laws. I understand they are strictly not for human administration.`;
+
+      const whatsappUrl = `https://wa.me/447916999789?text=${encodeURIComponent(messageText)}`;
+      setWhatsappMsgUrl(whatsappUrl);
+      
+      setTimeout(() => {
+        setIsSubmitting(false);
+        setIsSubmitted(true);
+        clearCart();
+        window.open(whatsappUrl, "_blank");
+      }, 1200);
+    } else {
+      setTimeout(() => {
+        setIsSubmitting(false);
+        setIsSubmitted(true);
+        clearCart();
+      }, 1500);
+    }
   };
 
   const resetDrawerState = () => {
     setIsCheckingOut(false);
     setIsSubmitted(false);
+    setCheckoutMethod(null);
+    setWhatsappMsgUrl("");
     setForm({
       name: "",
       email: "",
+      registryNumber: "",
       phone: "",
       institution: "",
       purpose: "",
@@ -159,17 +209,52 @@ export default function CartDrawer({
                   <div className="w-16 h-16 bg-emerald-50 border border-emerald-100 rounded-full flex items-center justify-center text-emerald-700 shadow-sm animate-bounce">
                     <CheckCircle className="w-8 h-8" />
                   </div>
-                  <div className="space-y-2">
-                    <h3 className="font-display font-bold text-2xl text-slate-900 leading-tight">
-                      Inquiry Compiled & Verified
-                    </h3>
-                    <p className="text-xs text-slate-500 leading-relaxed max-w-sm">
-                      Thank you. Your reference standard list has been locked and compiled under security code <strong className="font-mono text-teal-700">UKP-{Math.floor(100000 + Math.random() * 900000)}</strong>.
-                    </p>
-                    <p className="text-xs text-slate-500 leading-relaxed max-w-sm mt-2">
-                      An analytical standards officer will verify your institutional credentials (<strong>{form.email}</strong>) and provide a secure pro-forma invoice for <strong>{form.paymentMethod === "bank_transfer" ? "Bank Transfer" : "Gift Card"}</strong> payment with compliance logs in 24 business hours.
-                    </p>
-                  </div>
+                  
+                  {checkoutMethod === "whatsapp" ? (
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <h3 className="font-display font-bold text-2xl text-slate-900 leading-tight">
+                          Redirected to WhatsApp!
+                        </h3>
+                        <p className="text-xs text-slate-500 leading-relaxed max-w-sm">
+                          Your reference standard list has been locked and compiled under security code <strong className="font-mono text-teal-700">UKP-{Math.floor(100000 + Math.random() * 900000)}</strong>.
+                        </p>
+                        <p className="text-xs text-slate-500 leading-relaxed max-w-sm mt-2">
+                          We have attempted to open WhatsApp with your pre-filled compliance logs. An analytical standards officer will process your pro-forma invoice on WhatsApp.
+                        </p>
+                      </div>
+
+                      {whatsappMsgUrl && (
+                        <div className="pt-2">
+                          <a
+                            href={whatsappMsgUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow cursor-pointer"
+                          >
+                            <MessageSquare className="w-4 h-4" />
+                            Open WhatsApp Manually
+                          </a>
+                          <span className="block text-[10px] text-slate-400 mt-2">
+                            Click above if the chat did not open automatically.
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      <h3 className="font-display font-bold text-2xl text-slate-900 leading-tight">
+                        Inquiry Compiled & Verified
+                      </h3>
+                      <p className="text-xs text-slate-500 leading-relaxed max-w-sm">
+                        Thank you. Your reference standard list has been locked and compiled under security code <strong className="font-mono text-teal-700">UKP-{Math.floor(100000 + Math.random() * 900000)}</strong>.
+                      </p>
+                      <p className="text-xs text-slate-500 leading-relaxed max-w-sm mt-2">
+                        An analytical standards officer will verify your institutional credentials (<strong>{form.email}</strong>) and provide a secure pro-forma invoice for <strong>{form.paymentMethod === "bank_transfer" ? "Bank Transfer" : "Gift Card"}</strong> payment with compliance logs in 24 business hours.
+                      </p>
+                    </div>
+                  )}
+
                   <button
                     onClick={resetDrawerState}
                     className="w-full py-3 bg-slate-900 hover:bg-slate-850 text-white text-xs font-bold uppercase tracking-wider rounded-xl transition-all shadow"
@@ -179,7 +264,7 @@ export default function CartDrawer({
                 </div>
               ) : isCheckingOut ? (
                 /* SECURE CHECKOUT FORM */
-                <form onSubmit={handleCheckoutSubmit} className="space-y-5">
+                <form onSubmit={(e) => e.preventDefault()} className="space-y-5">
                   <div className="bg-amber-50/60 border border-amber-100 rounded-xl p-4 text-xs text-amber-900 leading-normal space-y-1.5">
                     <div className="font-bold flex items-center gap-1.5 text-amber-950 uppercase font-mono tracking-wide">
                       <ShieldCheck className="w-4 h-4 shrink-0 text-amber-700" />
@@ -222,6 +307,23 @@ export default function CartDrawer({
                       }`}
                     />
                     {errors.email && <p className="text-[10px] text-red-500">{errors.email}</p>}
+                  </div>
+
+                  {/* Registry Number */}
+                  <div className="space-y-1">
+                    <label className="block text-[10px] text-slate-400 font-mono uppercase">Lab Registry ID or Academic License Number *</label>
+                    <input
+                      required
+                      type="number"
+                      name="registryNumber"
+                      value={form.registryNumber}
+                      onChange={handleInputChange}
+                      placeholder="e.g. 10492815"
+                      className={`w-full px-4 py-2.5 text-xs border rounded-xl focus:border-teal-700 focus:outline-none bg-white ${
+                        errors.registryNumber ? "border-red-400" : "border-slate-200"
+                      }`}
+                    />
+                    {errors.registryNumber && <p className="text-[10px] text-red-500">{errors.registryNumber}</p>}
                   </div>
 
                   {/* Phone Number Field */}
@@ -327,24 +429,43 @@ export default function CartDrawer({
                     {errors.agreement && <p className="text-[10px] text-red-500">{errors.agreement}</p>}
                   </div>
 
-                  <div className="pt-2 flex gap-3">
+                  <div className="pt-4 border-t border-slate-100 space-y-3">
+                    <div className="flex gap-3">
+                      <button
+                        type="button"
+                        onClick={() => setIsCheckingOut(false)}
+                        className="flex-1 py-3 border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold text-xs uppercase tracking-wider rounded-xl transition-all cursor-pointer"
+                      >
+                        Back to Cart
+                      </button>
+                    </div>
+                    
                     <button
                       type="button"
-                      onClick={() => setIsCheckingOut(false)}
-                      className="w-1/3 py-3 border border-slate-200 hover:bg-slate-50 text-slate-700 font-semibold text-xs uppercase tracking-wider rounded-xl transition-all"
+                      disabled={isSubmitting || subtotal < 99}
+                      onClick={() => triggerCheckout("whatsapp")}
+                      className="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-200 disabled:text-slate-400 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer transition-transform duration-150 active:scale-[0.99]"
                     >
-                      Back
-                    </button>
-                    <button
-                      type="submit"
-                      disabled={isSubmitting}
-                      className="w-2/3 py-3 bg-teal-700 hover:bg-teal-800 disabled:bg-slate-300 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md flex items-center justify-center gap-1.5"
-                    >
-                      {isSubmitting ? (
+                      {isSubmitting && checkoutMethod === "whatsapp" ? (
                         <span className="w-3.5 h-3.5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
                       ) : (
-                        "Submit Verification"
+                        <MessageSquare className="w-4 h-4" />
                       )}
+                      Order & Verify via WhatsApp
+                    </button>
+
+                    <button
+                      type="button"
+                      disabled={isSubmitting || subtotal < 99}
+                      onClick={() => triggerCheckout("email")}
+                      className="w-full py-3.5 bg-teal-700 hover:bg-teal-800 disabled:bg-slate-200 disabled:text-slate-400 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer transition-transform duration-150 active:scale-[0.99] border border-teal-800"
+                    >
+                      {isSubmitting && checkoutMethod === "email" ? (
+                        <span className="w-3.5 h-3.5 border-2 border-white/20 border-t-white rounded-full animate-spin" />
+                      ) : (
+                        <Mail className="w-4 h-4" />
+                      )}
+                      Order & Verify via Email
                     </button>
                   </div>
                 </form>
