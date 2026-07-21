@@ -21,6 +21,7 @@ import FeaturedProducts from "./components/FeaturedProducts";
 import HomeFAQ from "./components/HomeFAQ";
 import CartDrawer from "./components/CartDrawer";
 import WhatsAppLiveChat from "./components/WhatsAppLiveChat";
+import SalesNotification from "./components/SalesNotification";
 import { CartItem, PeptideProduct } from "./types";
 
 // Page Header Component for separate pages
@@ -382,6 +383,9 @@ export default function App() {
 
       {/* Floating WhatsApp Live Chat Widget */}
       <WhatsAppLiveChat />
+
+      {/* Sales Notification Popup */}
+      <SalesNotification />
 
       {/* Slide-over Cart Drawer */}
       <CartDrawer
