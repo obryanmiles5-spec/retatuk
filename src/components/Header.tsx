@@ -105,7 +105,7 @@ export default function Header({ activePage, cartCount, onCartOpenClick }: Heade
             {/* Social Icons */}
             <div className="hidden lg:flex items-center gap-1.5 ml-2.5 pl-3 border-l border-slate-200/80">
               <a
-                href="https://www.tiktok.com/@buy_peptides_online?_r=1&_t=ZS-986j3hq0zvc"
+                href="https://www.tiktok.com/@peptites_source_review?_r=1&_t=ZN-98GaS0Eb0YY"
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`p-2 rounded-full transition-all duration-200 hover:text-teal-700 hover:bg-slate-50 flex items-center justify-center cursor-pointer ${
@@ -204,7 +204,7 @@ export default function Header({ activePage, cartCount, onCartOpenClick }: Heade
           {/* Mobile Social Links inside Drawer */}
           <div className="flex items-center justify-center gap-4 py-4 mt-3 border-t border-slate-100">
             <a
-              href="https://www.tiktok.com/@buy_peptides_online?_r=1&_t=ZS-986j3hq0zvc"
+              href="https://www.tiktok.com/@peptites_source_review?_r=1&_t=ZN-98GaS0Eb0YY"
               target="_blank"
               rel="noopener noreferrer"
               className="p-2.5 bg-slate-50 hover:bg-teal-50 hover:text-teal-700 rounded-xl border border-slate-150 text-slate-500 transition-colors flex items-center justify-center cursor-pointer"

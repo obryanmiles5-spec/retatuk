@@ -26,7 +26,7 @@ export default function Footer() {
               </h5>
               <div className="flex items-center gap-3">
                 <a
-                  href="https://www.tiktok.com/@buy_peptides_online?_r=1&_t=ZS-986j3hq0zvc"
+                  href="https://www.tiktok.com/@peptites_source_review?_r=1&_t=ZN-98GaS0Eb0YY"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="p-2 bg-slate-800 hover:bg-teal-700 hover:text-white rounded-xl border border-slate-700/50 hover:border-teal-600/30 text-slate-400 transition-all duration-250 flex items-center justify-center shadow-sm cursor-pointer group"
@@ -142,7 +142,7 @@ export default function Footer() {
               </li>
               <li>
                 <button
-                  onClick={() => alert("Full Chemical Disclaimer: All items listed on ukpeptidelabs.co.uk are distributed as laboratory reagents and analytical reference standard crystals. These products have not been cleared by the MHRA for any human diagnosis, therapy, or dietary supplementation.")}
+                  onClick={() => alert("Full Chemical Disclaimer: All items listed on buyretatrutideonline.uk are distributed as laboratory reagents and analytical reference standard crystals. These products have not been cleared by the MHRA for any human diagnosis, therapy, or dietary supplementation.")}
                   className="hover:text-teal-400 transition-colors text-left bg-transparent border-none p-0 cursor-pointer"
                 >
                   Chemical Safety Disclaimer

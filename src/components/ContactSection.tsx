@@ -89,16 +89,31 @@ export default function ContactSection() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (validate()) {
       setIsSubmitting(true);
       
-      // Simulate API submission
-      setTimeout(() => {
-        setIsSubmitting(false);
+      try {
+        const response = await fetch("/api/contact", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(form),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to send message");
+        }
+
         setIsSubmitted(true);
-      }, 1200);
+      } catch (err) {
+        console.error("Error submitting contact form:", err);
+        alert("Failed to send message. Please try again later.");
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -168,9 +183,9 @@ export default function ContactSection() {
                   <Phone className="w-5 h-5" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-slate-900 text-sm">Laboratory Support Telephone</h4>
+                  <h4 className="font-bold text-slate-900 text-sm">WhatsApp Support</h4>
                   <p className="text-xs sm:text-sm text-slate-500 mt-1 font-mono">
-                    +44 (0) 20 7946 0192
+                    +44 7916 999 789
                   </p>
                   <p className="text-[10px] text-slate-400 mt-0.5">
                     (Standard UK carrier rates apply)
@@ -186,7 +201,7 @@ export default function ContactSection() {
                 <div>
                   <h4 className="font-bold text-slate-900 text-sm">Technical Support Email</h4>
                   <p className="text-xs sm:text-sm text-slate-500 mt-1 font-mono hover:text-teal-700 transition-colors">
-                    support@ukpeptidelabs.co.uk
+                    support@buyretatrutideonline.uk
                   </p>
                 </div>
               </div>

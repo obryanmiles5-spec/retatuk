@@ -56,7 +56,7 @@ export default function CartDrawer({
   const [checkoutMethod, setCheckoutMethod] = useState<"email" | "whatsapp" | null>(null);
   const [whatsappMsgUrl, setWhatsappMsgUrl] = useState("");
 
-  const triggerCheckout = (method: "email" | "whatsapp") => {
+  const triggerCheckout = async (method: "email" | "whatsapp") => {
     if (subtotal < 99) {
       return; // Prevent submissions below minimum order
     }
@@ -101,17 +101,16 @@ export default function CartDrawer({
     setIsSubmitting(true);
     setCheckoutMethod(method);
 
-    if (method === "whatsapp") {
-      const orderItemsText = cart
-        .map(
-          (item) =>
-            `- ${item.product.name} (${item.product.size}, ${item.product.purity} Purity) x ${item.quantity} = £${(
-              item.product.price * item.quantity
-            ).toFixed(2)}`
-        )
-        .join("\n");
+    const orderItemsText = cart
+      .map(
+        (item) =>
+          `- ${item.product.name} (${item.product.size}, ${item.product.purity} Purity) x ${item.quantity} = £${(
+            item.product.price * item.quantity
+          ).toFixed(2)}`
+      )
+      .join("\n");
 
-      const messageText = `🔬 *UK PEPTIDE LABS - PROCUREMENT INQUIRY*
+    const messageText = `🔬 *UK PEPTIDE LABS - PROCUREMENT INQUIRY*
 ----------------------------------------
 *Principal Researcher:* ${form.name}
 *Institutional Email:* ${form.email}
@@ -128,21 +127,39 @@ ${orderItemsText}
 
 *Compliance Verification:* I verify that these reference standard compounds are destined strictly for in-vitro research and laboratory testing, in compliance with UK laws. I understand they are strictly not for human administration.`;
 
-      const whatsappUrl = `https://wa.me/447916999789?text=${encodeURIComponent(messageText)}`;
-      setWhatsappMsgUrl(whatsappUrl);
-      
-      setTimeout(() => {
-        setIsSubmitting(false);
-        setIsSubmitted(true);
-        clearCart();
+    try {
+      const contactInfo = `Name: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\nInstitution: ${form.institution}\nRegistry: ${form.registryNumber}`;
+      // Send email to admin
+      const response = await fetch("/api/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          subject: `New Order from ${form.name} (${form.email})`,
+          contactInfo,
+          message: messageText,
+          type: "order"
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to send order email");
+      }
+
+      if (method === "whatsapp") {
+        const whatsappUrl = `https://wa.me/447916999789?text=${encodeURIComponent(messageText)}`;
+        setWhatsappMsgUrl(whatsappUrl);
         window.open(whatsappUrl, "_blank");
-      }, 1200);
-    } else {
-      setTimeout(() => {
-        setIsSubmitting(false);
-        setIsSubmitted(true);
-        clearCart();
-      }, 1500);
+      }
+
+      setIsSubmitted(true);
+      clearCart();
+    } catch (err) {
+      console.error("Error submitting order:", err);
+      alert("Failed to process order. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -335,7 +352,7 @@ ${orderItemsText}
                       name="phone"
                       value={form.phone}
                       onChange={handleInputChange}
-                      placeholder="e.g. +44 20 7946 0192"
+                      placeholder="e.g. +44 7916 999 789"
                       className={`w-full px-4 py-2.5 text-xs border rounded-xl focus:border-teal-700 focus:outline-none bg-white ${
                         errors.phone ? "border-red-400" : "border-slate-200"
                       }`}
