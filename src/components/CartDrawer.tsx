@@ -36,7 +36,6 @@ export default function CartDrawer({
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
-  if (!isOpen) return null;
 
   const subtotal = cart.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
 
@@ -55,6 +54,8 @@ export default function CartDrawer({
 
   const [checkoutMethod, setCheckoutMethod] = useState<"email" | "whatsapp" | null>(null);
   const [whatsappMsgUrl, setWhatsappMsgUrl] = useState("");
+
+  if (!isOpen) return null;
 
   const triggerCheckout = async (method: "email" | "whatsapp") => {
     if (subtotal < 99) {
