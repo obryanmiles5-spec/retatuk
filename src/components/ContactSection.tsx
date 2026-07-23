@@ -95,12 +95,18 @@ export default function ContactSection() {
       setIsSubmitting(true);
       
       try {
-        const response = await fetch("/api/contact", {
+        const contactInfo = `Name: ${form.name}\nEmail: ${form.email}`;
+        const response = await fetch("/api/send-email", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(form),
+          body: JSON.stringify({
+            subject: `Contact Form: ${form.subject}`,
+            contactInfo: contactInfo,
+            message: form.message,
+            type: "contact"
+          }),
         });
 
         if (!response.ok) {

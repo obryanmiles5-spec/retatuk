@@ -26,10 +26,8 @@ export default function CartDrawer({
   const [form, setForm] = useState({
     name: "",
     email: "",
-    registryNumber: "",
     phone: "",
     institution: "",
-    purpose: "",
     paymentMethod: "bank_transfer",
     agreement: false,
   });
@@ -73,10 +71,7 @@ export default function CartDrawer({
       tempErrors.email = "Valid institutional email is required";
       isValid = false;
     }
-    if (!form.registryNumber.trim()) {
-      tempErrors.registryNumber = "Lab Registry ID or Academic License Number is required";
-      isValid = false;
-    }
+    
     if (!form.phone.trim() || form.phone.trim().length < 6) {
       tempErrors.phone = "Valid contact phone number is required";
       isValid = false;
@@ -85,10 +80,7 @@ export default function CartDrawer({
       tempErrors.institution = "Institutional or research affiliation is required";
       isValid = false;
     }
-    if (!form.purpose.trim() || form.purpose.trim().length < 15) {
-      tempErrors.purpose = "Describe research purpose in details (min 15 characters)";
-      isValid = false;
-    }
+    
     if (!form.agreement) {
       tempErrors.agreement = "You must accept the statutory compliance warning";
       isValid = false;
@@ -115,10 +107,8 @@ export default function CartDrawer({
 ----------------------------------------
 *Principal Researcher:* ${form.name}
 *Institutional Email:* ${form.email}
-*Lab Registry ID/Licence:* ${form.registryNumber}
 *Contact Phone:* ${form.phone}
 *Research Affiliation:* ${form.institution}
-*Intended Application:* ${form.purpose}
 *Preferred Payment:* ${form.paymentMethod === "bank_transfer" ? "Bank Transfer" : "Gift Card"}
 
 *Order Details:*
@@ -129,7 +119,7 @@ ${orderItemsText}
 *Compliance Verification:* I verify that these reference standard compounds are destined strictly for in-vitro research and laboratory testing, in compliance with UK laws. I understand they are strictly not for human administration.`;
 
     try {
-      const contactInfo = `Name: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\nInstitution: ${form.institution}\nRegistry: ${form.registryNumber}`;
+      const contactInfo = `Name: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\nInstitution: ${form.institution}`;
       // Send email to admin
       const response = await fetch("/api/send-email", {
         method: "POST",
@@ -172,10 +162,8 @@ ${orderItemsText}
     setForm({
       name: "",
       email: "",
-      registryNumber: "",
       phone: "",
       institution: "",
-      purpose: "",
       paymentMethod: "bank_transfer",
       agreement: false,
     });
@@ -328,21 +316,7 @@ ${orderItemsText}
                   </div>
 
                   {/* Registry Number */}
-                  <div className="space-y-1">
-                    <label className="block text-[10px] text-slate-400 font-mono uppercase">Lab Registry ID or Academic License Number *</label>
-                    <input
-                      required
-                      type="number"
-                      name="registryNumber"
-                      value={form.registryNumber}
-                      onChange={handleInputChange}
-                      placeholder="e.g. 10492815"
-                      className={`w-full px-4 py-2.5 text-xs border rounded-xl focus:border-teal-700 focus:outline-none bg-white ${
-                        errors.registryNumber ? "border-red-400" : "border-slate-200"
-                      }`}
-                    />
-                    {errors.registryNumber && <p className="text-[10px] text-red-500">{errors.registryNumber}</p>}
-                  </div>
+                  
 
                   {/* Phone Number Field */}
                   <div className="space-y-1">
@@ -414,21 +388,7 @@ ${orderItemsText}
                   </div>
 
                   {/* Research Purpose */}
-                  <div className="space-y-1">
-                    <label className="block text-[10px] text-slate-400 font-mono uppercase">Intended Scientific Application *</label>
-                    <textarea
-                      required
-                      rows={3}
-                      name="purpose"
-                      value={form.purpose}
-                      onChange={handleInputChange}
-                      placeholder="Describe target analytical focus (e.g. In-vitro receptor binding kinetics study on animal cell lines)."
-                      className={`w-full px-4 py-2.5 text-xs border rounded-xl focus:border-teal-700 focus:outline-none bg-white resize-none ${
-                        errors.purpose ? "border-red-400" : "border-slate-200"
-                      }`}
-                    />
-                    {errors.purpose && <p className="text-[10px] text-red-500">{errors.purpose}</p>}
-                  </div>
+                  
 
                   {/* Agreement checkbox */}
                   <div className="space-y-2">
